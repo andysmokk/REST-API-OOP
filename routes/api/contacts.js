@@ -1,5 +1,5 @@
 const express = require("express");
-const model = require("../../model/contacts/index");
+const Contacts = require("../../model/contacts/index");
 const router = express.Router();
 const {
   addContactValidation,
@@ -7,13 +7,13 @@ const {
 } = require("../../middlewares/index");
 
 router.get("/", async (req, res, next) => {
-  const contacts = await model.listContacts();
+  const contacts = await Contacts.listContacts();
   res.status(200).json(contacts);
 });
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const contactById = await model.getContactById(id);
+  const contactById = await Contacts.getContactById(id);
   if (contactById) {
     return res.status(200).json(contactById);
   }
@@ -21,13 +21,13 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.post("/", addContactValidation, async (req, res, next) => {
-  const newContact = await model.addContact(req.body);
+  const newContact = await Contacts.addContact(req.body);
   return res.status(201).json(newContact);
 });
 
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const removedContact = await model.removeContact(id);
+  const removedContact = await Contacts.removeContact(id);
   if (removedContact) {
     return res.status(200).json({ message: "Contact deleted" });
   }
@@ -36,7 +36,7 @@ router.delete("/:id", async (req, res, next) => {
 
 router.put("/:id", updateContactValidation, async (req, res, next) => {
   const { id } = req.params;
-  const updatedContact = await model.updateContact(id, req.body);
+  const updatedContact = await Contacts.updateContact(id, req.body);
   if (updatedContact) {
     return res.status(200).json(updatedContact);
   }
