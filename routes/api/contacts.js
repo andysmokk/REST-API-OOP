@@ -6,10 +6,7 @@ const {
   updateContactValidation,
 } = require("../../middlewares/index");
 
-router.get("/", async (req, res, next) => {
-  const contacts = await Contacts.listContacts();
-  res.status(200).json(contacts);
-});
+router.get("/");
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
