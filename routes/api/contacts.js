@@ -1,12 +1,16 @@
 const express = require("express");
-const Contacts = require("../../model/contacts/index");
-const router = express.Router();
+// const Contacts = require("../../controllers/contacts/Contacts");
+const { getContacts } = require("../../repository/contacts");
 const {
   addContactValidation,
   updateContactValidation,
 } = require("../../middlewares/index");
 
-router.get("/");
+// const contacts = new Contacts();
+
+const router = express.Router();
+
+router.route("/").get(getContacts);
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
